@@ -4,5 +4,8 @@ export default defineConfig({
   plugins: [
     tailwindcss(),
   ],
-  base: "/vite-gsap-demo-everyday-agency"
+  base: "/vite-gsap-demo-everyday-agency",
+  build: {
+      outDir: 'dist', // Ensure this is set correctly
+  },
 })
