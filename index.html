@@ -31,10 +31,13 @@
          <!-- Build 4 Boxes and position difference with position absolute in this section. -->
           <!-- The Boxes should scroll in difference speed -->
         <div class="relative w-full h-full" data-gsap-image-gallery>
-          <div data-speed="1.15" class="absolute top-3/4 left-0 w-[12.5rem] h-[12.5rem] bg-red-500">1.15</div>
-          <div data-speed="0.45" class="absolute top-1/5 left-1/4 w-[12.5rem] h-[12.5rem] bg-green-500">0.45</div>
-          <div data-speed="1.25" class="absolute top-1/2 left-2/4 w-[12.5rem] h-[12.5rem] bg-blue-500">1.25</div>
-          <div data-speed="0.25" class="absolute top-0 left-3/4 w-[12.5rem] h-[12.5rem] bg-yellow-500">0.25</div>
+          <div data-speed="1.15" class="z-30 absolute top-3/4 left-0 w-[12.5rem] h-[12.5rem] bg-red-500">1.15</div>
+          <div data-speed="0.45" class="z-0 absolute top-1/5 left-1/4 w-[12.5rem] h-[12.5rem] bg-green-500">0.45</div>
+          <div data-speed="1.25" class="z-30 absolute top-1/2 left-2/4 w-[12.5rem] h-[12.5rem] bg-blue-500">1.25</div>
+          <div data-speed="0.25" class="z-30 absolute top-0 left-3/4 w-[12.5rem] h-[12.5rem] bg-yellow-500">0.25</div>
+          <div data-speed="1.75" class="z-10 absolute top-3/4 left-1/2 -translate-x-1/2 ">
+            <h2 data-headline-scale class="text-white text-3xl">Hello World!</h2>
+          </div>
         </div>
         
       </section>

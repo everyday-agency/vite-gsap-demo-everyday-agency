@@ -9,6 +9,8 @@ export function gsapImageGalleryParallaxScroll() {
         '[data-gsap-image-gallery]',
     );
 
+    const gsapHeadlineScale = document.querySelector('[data-headline-scale]');
+
     if (!gsapImageGalleryContainer) return;
 
     const timeline = gsap.timeline({
@@ -22,13 +24,25 @@ export function gsapImageGalleryParallaxScroll() {
         },
     });
 
-    timeline.to(gsapImageGalleryContainer.querySelectorAll('[data-speed]'), {
-        y: (i, el) =>
-            (1 - parseFloat(el.getAttribute('data-speed'))) *
-            gsapImageGalleryContainer.offsetHeight,
-        ease: 'none',
-        stagger: {
-            amount: 0.1,
-        },
-    });
+    timeline
+        .to(gsapImageGalleryContainer.querySelectorAll('[data-speed]'), {
+            y: (i, el) =>
+                (1 - parseFloat(el.getAttribute('data-speed'))) *
+                gsapImageGalleryContainer.offsetHeight,
+            ease: 'none',
+            stagger: {
+                amount: 0.1,
+            },
+        })
+        .to(gsapHeadlineScale, {
+            scrollTrigger: {
+                trigger: gsapHeadlineScale,
+                start: 'top bottom',
+                end: 'center center',
+                scrub: true,
+                markers: true,
+            },
+            scale: 2,
+            y: -200,
+        });
 }
