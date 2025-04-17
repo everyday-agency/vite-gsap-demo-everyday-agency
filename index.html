@@ -13,13 +13,34 @@
     
       <div class="gsap-container">
         <section data-section class="flex justify-center items-center h-screen w-full">
-          <h1 class="text-4xl font-bold text-white">Hello World!</h1>
+          <h1 data-h1-animation class="text-4xl font-bold text-white">Hello World!</h1>
         </section>
     
         <section data-section class="flex justify-center items-center h-screen w-full ">
           <p class="text-white text-xl">Keep Scrolling...</p>
         </section>
       </div>
+
+      <section class="flex justify-center items-center h-screen w-full">
+        <h1 class="text-4xl font-bold text-black">Second Test Section</h1>
+      </section>
+
+      <section class="flex flex-col justify-center items-center h-screen w-full bg-gray-800">
+        <h1 class="text-4xl font-bold text-white">Difference Image Parallax Scroll</h1>
+        <!-- TODO: -->
+         <!-- Build 4 Boxes and position difference with position absolute in this section. -->
+          <!-- The Boxes should scroll in difference speed -->
+        <div class="relative w-full h-full" data-gsap-image-gallery>
+          <div data-speed="1.15" class="absolute top-3/4 left-0 w-[12.5rem] h-[12.5rem] bg-red-500">1.15</div>
+          <div data-speed="0.45" class="absolute top-1/5 left-1/4 w-[12.5rem] h-[12.5rem] bg-green-500">0.45</div>
+          <div data-speed="1.25" class="absolute top-1/2 left-2/4 w-[12.5rem] h-[12.5rem] bg-blue-500">1.25</div>
+          <div data-speed="0.25" class="absolute top-0 left-3/4 w-[12.5rem] h-[12.5rem] bg-yellow-500">0.25</div>
+        </div>
+        
+      </section>
+      <section data-section class="flex justify-center items-center h-screen w-full ">
+        <p class="text-gray-800 text-xl">Keep Scrolling...</p>
+      </section>
     
     <script type="module" src="/src/main.js"></script>
   </body>
