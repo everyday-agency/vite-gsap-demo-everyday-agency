@@ -16,7 +16,7 @@ export function gsapContainerColorChange() {
     gsap.timeline({
         scrollTrigger: {
             trigger: gsapContainer,
-            start: 'top bottom',
+            start: 'top center',
             end: 'top top',
             scrub: true,
             markers: true,
@@ -38,7 +38,7 @@ export function gsapContainerColorChange() {
             start: 'top bottom',
             end: 'top top',
             scrub: true,
-            markers: true,
+            // markers: true,
         },
         scale: 10,
         y: -200,

@@ -19,7 +19,7 @@ export function gsapImageGalleryParallaxScroll() {
             start: 'top bottom',
             end: 'bottom top',
             scrub: 0,
-            markers: true,
+            // markers: true,
             invalidateOnRefresh: true,
         },
     });
@@ -40,7 +40,7 @@ export function gsapImageGalleryParallaxScroll() {
                 start: 'top bottom',
                 end: 'center center',
                 scrub: true,
-                markers: true,
+                // markers: true,
             },
             scale: 2,
             y: -200,
