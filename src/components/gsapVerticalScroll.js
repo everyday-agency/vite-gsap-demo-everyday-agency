@@ -30,7 +30,7 @@ function verticalScroll(container) {
 
     // create an observer and disable it to start
     let intentObserver = ScrollTrigger.observe({
-        type: 'wheel,touch, pointer',
+        type: 'wheel,touch, pointer, scroll',
         onUp: () => allowScroll && gotoPanel(currentIndex - 1, false, container),
         onDown: () => allowScroll && gotoPanel(currentIndex + 1, true, container),
         tolerance: 10,
