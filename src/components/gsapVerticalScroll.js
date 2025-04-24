@@ -3,24 +3,27 @@ import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 export function gsapVerticalScroll() {
-    console.log('gsapVerticalScroll function called');
     gsap.registerPlugin(ScrollTrigger);
 
-    const gsapVerticalScrollContainer = document.querySelector('[data-gsap-vertical-scroll]');
+    const container = document.querySelector('[data-gsap-vertical-scroll]');
 
-    if (!gsapVerticalScrollContainer) return;
+    if (!container) return;
 
-    verticalScroll(gsapVerticalScrollContainer);
+    verticalScroll(container);
 }
 
 function verticalScroll(container) {
-    console.log('test');
     gsap.registerPlugin(ScrollTrigger);
 
-    let allowScroll = true; // sometimes we want to ignore scroll-related stuff, like when an Observer-based section is transitioning.
-    let scrollTimeout = gsap.delayedCall(1, () => (allowScroll = true)).pause(); // controls how long we should wait after an Observer-based animation is initiated before we allow another scroll-related action
+    // sometimes we want to ignore scroll-related stuff, like when an Observer-based section is transitioning.
+    let allowScroll = true;
+
+    // controls how long we should wait after an Observer-based animation is initiated before we allow another scroll-related action
+    let scrollTimeout = gsap.delayedCall(1, () => (allowScroll = true)).pause();
+
     let currentIndex = 0;
-    let swipePanels = gsap.utils.toArray('.swipe-section .panel');
+    // let swipePanels = gsap.utils.toArray('.swipe-section .panel');
+    let swipePanels = gsap.utils.toArray('[data-gspa-vertical-scroll-panel]');
 
     // set z-index levels for the swipe panels
     gsap.set(swipePanels, { zIndex: (i) => swipePanels.length - i });
@@ -28,16 +31,21 @@ function verticalScroll(container) {
     // create an observer and disable it to start
     let intentObserver = ScrollTrigger.observe({
         type: 'wheel,touch',
-        onUp: () => allowScroll && gotoPanel(currentIndex - 1, false),
-        onDown: () => allowScroll && gotoPanel(currentIndex + 1, true),
+        onUp: () => allowScroll && gotoPanel(currentIndex - 1, false, container),
+        onDown: () => allowScroll && gotoPanel(currentIndex + 1, true, container),
         tolerance: 10,
         preventDefault: true,
         onEnable(self) {
             allowScroll = false;
-            scrollTimeout.restart(true);
+
             // when enabling, we should save the scroll position and freeze it. This fixes momentum-scroll on Macs, for example.
+            scrollTimeout.restart(true);
+
             let savedScroll = self.scrollY();
-            self._restoreScroll = () => self.scrollY(savedScroll); // if the native scroll repositions, force it back to where it should be
+
+            // if the native scroll repositions, force it back to where it should be
+            self._restoreScroll = () => self.scrollY(savedScroll);
+
             document.addEventListener('scroll', self._restoreScroll, { passive: false });
         },
         onDisable: (self) => document.removeEventListener('scroll', self._restoreScroll),
@@ -45,10 +53,11 @@ function verticalScroll(container) {
     intentObserver.disable();
 
     // handle the panel swipe animations
-    function gotoPanel(index, isScrollingDown) {
+    function gotoPanel(index, isScrollingDown, container) {
         // return to normal scroll if we're at the end or back up to the start
         if ((index === swipePanels.length && isScrollingDown) || (index === -1 && !isScrollingDown)) {
-            intentObserver.disable(); // resume native scroll
+            // resume native scroll
+            intentObserver.disable();
             return;
         }
         allowScroll = false;
@@ -65,23 +74,35 @@ function verticalScroll(container) {
 
     // pin swipe section and initiate observer
     ScrollTrigger.create({
-        trigger: '.swipe-section',
+        trigger: container,
         pin: true,
         start: 'top top',
-        end: '+=200', // just needs to be enough to not risk vibration where a user's fast-scroll shoots way past the end
+
+        // just needs to be enough to not risk vibration where a user's fast-scroll shoots way past the end
+        end: '+=200',
+
         onEnter: (self) => {
+            // in case the native scroll jumped past the end and then we force it back to where it should be.
             if (intentObserver.isEnabled) {
                 return;
-            } // in case the native scroll jumped past the end and then we force it back to where it should be.
-            self.scroll(self.start + 1); // jump to just one pixel past the start of this section so we can hold there.
-            intentObserver.enable(); // STOP native scrolling
+            }
+
+            // jump to just one pixel past the start of this section so we can hold there.
+            self.scroll(self.start + 1);
+
+            // STOP native scrolling
+            intentObserver.enable();
         },
         onEnterBack: (self) => {
+            // in case the native scroll jumped backward past the start and then we force it back to where it should be.
             if (intentObserver.isEnabled) {
                 return;
-            } // in case the native scroll jumped backward past the start and then we force it back to where it should be.
-            self.scroll(self.end - 1); // jump to one pixel before the end of this section so we can hold there.
-            intentObserver.enable(); // STOP native scrolling
+            }
+            // jump to one pixel before the end of this section so we can hold there.
+            self.scroll(self.end - 1);
+
+            // STOP native scrolling
+            intentObserver.enable();
         },
     });
 }
